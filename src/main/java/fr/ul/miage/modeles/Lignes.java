@@ -24,16 +24,8 @@ public class Lignes<T> {
 				.collect(Collectors.toList());
 	}
 
-	public ArrayList<T> filterByDate(Date date1, Date date2) {
-		return (ArrayList<T>) this.elements.stream()
-				.filter(ligne -> ((Ligne) ligne).getDate().after(date1) && ((Ligne) ligne).getDate().before(date2))
-				.collect(Collectors.toList());
-	}
-	
-	public ArrayList<T> filterByDateAndDep(Date date1, Date date2, String dep){
-		return (ArrayList<T>) this.elements.stream()
-				.filter(ligne -> ((Ligne) ligne).getDate().after(date1) && ((Ligne) ligne).getDate().before(date2))
-				.collect(Collectors.toList());
+	public ArrayList<T> returnAll(){
+		return this.elements;
 	}
 	
 	public int size() {

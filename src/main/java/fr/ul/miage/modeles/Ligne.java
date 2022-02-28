@@ -16,7 +16,7 @@ public class Ligne {
 		this.count = count;
 		this.departement = departement.replace("DEP-", "");
 		this.departement = this.departement.replace("REG-","");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		this.date = sdf.parse(date);
 	}
 	
@@ -37,7 +37,7 @@ public class Ligne {
 	}
 	
 	public String getStringDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(this.date);
 	}
 }

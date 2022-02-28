@@ -2,19 +2,10 @@ package fr.ul.miage.covid;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.exceptions.CsvValidationException;
 
 import fr.ul.miage.modeles.CSVLine;
 import fr.ul.miage.modeles.Ligne;
@@ -22,7 +13,7 @@ import fr.ul.miage.modeles.Lignes;
 
 import java.text.ParseException;
 
-public class JsonLoader {
+public class CSVParser {
 
 	private FileReader file_reader;
 
@@ -34,42 +25,17 @@ public class JsonLoader {
 
 	private Lignes vaccinations = new Lignes();
 
-	public JsonLoader(String filename) {
-		ClassLoader classLoader = JsonLoader.class.getClassLoader();
+	public CSVParser(String filename) {
+		ClassLoader classLoader = CSVParser.class.getClassLoader();
 		URL resource = classLoader.getResource(filename);
 		try {
-			this.file_reader = (new FileReader(resource.getFile()));
+			if (resource != null) {
+				this.file_reader = (new FileReader(resource.getFile()));
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		this.parseCSV();
-		// this.parseJson();
-	}
-
-	public void parseJson() {
-		try {
-			JSONArray json_array = (JSONArray) new JSONParser().parse(this.file_reader);
-			Iterator<JSONObject> iterator = json_array.iterator();
-			while (iterator.hasNext()) {
-				JSONObject temp = iterator.next();
-				Long deces = (Long) temp.get("deces");
-				Long hospitalisations = (Long) temp.get("hospitalises");
-				Long reanimations = (Long) temp.get("reanimation");
-				String date = (String) temp.get("date");
-				String code = (String) temp.get("code");
-				if (deces != null && date != null && code != null && code.contains("DEP-")) {
-					this.morts.add(new Ligne(deces, code, date));
-				}
-				if (hospitalisations != null && date != null && code != null && code.contains("DEP-")) {
-					this.hospitalisations.add(new Ligne(hospitalisations, code, date));
-				}
-				if (reanimations != null && date != null && code != null && code.contains("DEP-")) {
-					this.reanimations.add(new Ligne(reanimations, code, date));
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void parseCSV() {
@@ -79,8 +45,8 @@ public class JsonLoader {
 				Long deces = Long.parseLong(ligne.getDeces());
 				Long hospitalisations = Long.parseLong(ligne.getHospitalisations());
 				Long reanimations = Long.parseLong(ligne.getReanimations());
-				String date = (String) ligne.getDate();
-				String code = (String) ligne.getDepartement();
+				String date = ligne.getDate();
+				String code = ligne.getDepartement();
 				if (deces != null && date != null && code != null && code.contains("DEP-")) {
 					try {
 						this.morts.add(new Ligne(deces, code, date));

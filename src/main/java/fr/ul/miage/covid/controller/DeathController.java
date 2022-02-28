@@ -1,24 +1,17 @@
 package fr.ul.miage.covid.controller;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 import fr.ul.miage.covid.App;
 import fr.ul.miage.modeles.Ligne;
 import fr.ul.miage.modeles.Lignes;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.MenuButton;
 
 public class DeathController {
 
@@ -35,7 +28,7 @@ public class DeathController {
 	private void initialize() throws IOException {
 		x_deaths.setLabel("Date");
 		y_deaths.setLabel("Nombre");
-		this.lignes = App.jsonloader.getMorts();
+		this.lignes = App.JSONLOADER.getMorts();
 		this.dep_choosen = new ArrayList();
 		this.deaths_chart.setAnimated(false);
 	}

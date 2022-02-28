@@ -49,7 +49,7 @@ public class MainController {
 			item.setHideOnClick(false);
 			cb.setOnAction(e -> {
 				CheckBox check = (CheckBox) e.getSource();
-				if (check.isSelected() == true) {
+				if (check.isSelected()) {
 					this.deathController.addDeathsDep(check.getText());
 					check.setDisable(true);
 				}
@@ -76,12 +76,10 @@ public class MainController {
 				LocalDate localDate2 = dp2.getValue();
 				Instant instant2 = Instant.from(localDate2.atStartOfDay(ZoneId.systemDefault()));
 				Date date2 = Date.from(instant2);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				System.out.println(date);
 				System.out.println(date2);
 				this.deathController.addDeathDate(date,date2);
-			}else {
-				System.out.println("Date nulle");
 			}
 		});
 	}
@@ -106,5 +104,7 @@ public class MainController {
 			check.setSelected(false);
 			check.setDisable(false);
 		});
+		this.dp1.setValue(null);
+		this.dp2.setValue(null);
 	}
 }

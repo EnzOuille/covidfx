@@ -23,7 +23,7 @@ public class TestController {
 		y.setLabel("Nombre");
 		XYChart.Series series = new XYChart.Series();
 		series.setName("Test");
-		this.lignes = App.jsonloader.getMorts();
+		this.lignes = App.JSONLOADER.getMorts();
 		this.lignes.filterByDep("54").forEach(ligne -> series.getData().add(new XYChart.Data<>(((Ligne) ligne).getStringDate(),((Ligne) ligne).getCount())));
 		test.getData().add(series);
 	}
