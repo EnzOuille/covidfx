@@ -17,13 +17,13 @@ public class CSVParser {
 
 	private FileReader file_reader;
 
-	private Lignes morts = new Lignes();
+	private final Lignes morts = new Lignes();
 
-	private Lignes reanimations = new Lignes();
+	private final Lignes reanimations = new Lignes();
 
-	private Lignes hospitalisations = new Lignes();
+	private final Lignes hospitalisations = new Lignes();
 
-	private Lignes vaccinations = new Lignes();
+	private final Lignes vaccinations = new Lignes();
 
 	public CSVParser(String filename) {
 		ClassLoader classLoader = CSVParser.class.getClassLoader();
@@ -42,9 +42,9 @@ public class CSVParser {
 		try {
 			List<CSVLine> beans = new CsvToBeanBuilder(this.file_reader).withType(CSVLine.class).build().parse();
 			beans.forEach(ligne -> {
-				Long deces = Long.parseLong(ligne.getDeces());
-				Long hospitalisations = Long.parseLong(ligne.getHospitalisations());
-				Long reanimations = Long.parseLong(ligne.getReanimations());
+				Long deces = Long.valueOf(ligne.getDeces());
+				Long hospitalisations = Long.valueOf(ligne.getHospitalisations());
+				Long reanimations = Long.valueOf(ligne.getReanimations());
 				String date = ligne.getDate();
 				String code = ligne.getDepartement();
 				if (deces != null && date != null && code != null && code.contains("DEP-")) {

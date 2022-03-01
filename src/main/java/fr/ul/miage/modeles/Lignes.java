@@ -7,27 +7,23 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Lignes<T> {
+public class Lignes {
 
-	private ArrayList<T> elements = new ArrayList<T>();
+	private final ArrayList<Ligne> elements;
 
 	public Lignes() {
-
+		this.elements = new ArrayList<Ligne>();
 	}
 
-	public void add(T ligne) {
+	public void add(Ligne ligne) {
 		this.elements.add(ligne);
 	}
 
-	public ArrayList<T> filterByDep(String dep) {
-		return (ArrayList<T>) this.elements.stream().filter(ligne -> (((Ligne) ligne).getDepartement().equals(dep)))
+	public ArrayList<Ligne> filterByDep(String dep) {
+		return (ArrayList<Ligne>) this.elements.stream().filter(ligne -> ligne.getDepartement().equals(dep))
 				.collect(Collectors.toList());
 	}
 
-	public ArrayList<T> returnAll(){
-		return this.elements;
-	}
-	
 	public int size() {
 		return this.elements.size();
 	}

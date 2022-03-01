@@ -1,7 +1,6 @@
 package fr.ul.miage.covid.controller;
 
 import fr.ul.miage.covid.App;
-import fr.ul.miage.modeles.Ligne;
 import fr.ul.miage.modeles.Lignes;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
@@ -11,7 +10,7 @@ import javafx.scene.chart.XYChart;
 
 public class TestController {
 	
-	private Lignes lignes;
+	private final Lignes lignes = App.JSONLOADER.getMorts();
 	
     @FXML private CategoryAxis y ;
 	@FXML private NumberAxis x ;
@@ -21,10 +20,9 @@ public class TestController {
 	private void initialize() {
 		x.setLabel("Date");
 		y.setLabel("Nombre");
-		XYChart.Series series = new XYChart.Series();
+		XYChart.Series<String, Number> series = new XYChart.Series<>();
 		series.setName("Test");
-		this.lignes = App.JSONLOADER.getMorts();
-		this.lignes.filterByDep("54").forEach(ligne -> series.getData().add(new XYChart.Data<>(((Ligne) ligne).getStringDate(),((Ligne) ligne).getCount())));
+		this.lignes.filterByDep("54").forEach(ligne -> series.getData().add(new XYChart.Data<>(ligne.getStringDate(),ligne.getCount())));
 		test.getData().add(series);
 	}
 }

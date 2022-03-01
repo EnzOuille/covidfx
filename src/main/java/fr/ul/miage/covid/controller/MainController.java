@@ -1,8 +1,6 @@
 package fr.ul.miage.covid.controller;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -18,11 +16,9 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.BorderPane;
 
 public class MainController {
 	
-	@FXML private BorderPane main_pane;
 	@FXML private MenuButton menu_button_dep;
 	@FXML private TitledPane accordion_d;
 	@FXML private TitledPane accordion_h;
@@ -34,6 +30,7 @@ public class MainController {
 	@FXML private Button apply_date;
 	
 	private DeathController deathController;
+	private HospitalController hospitalController;
 	
 	@FXML
 	private void initialize() throws IOException {
@@ -42,7 +39,7 @@ public class MainController {
 	}
 	
 	private void addListenersAndContainers() {
-		ArrayList<CustomMenuItem> menu_list = new ArrayList();
+		ArrayList<CustomMenuItem> menu_list = new ArrayList<>();
 		for (int i=1; i <91; i++) {
 			CheckBox cb = new CheckBox(String.valueOf(i));
 			CustomMenuItem item = new CustomMenuItem(cb);
@@ -51,6 +48,7 @@ public class MainController {
 				CheckBox check = (CheckBox) e.getSource();
 				if (check.isSelected()) {
 					this.deathController.addDeathsDep(check.getText());
+					this.hospitalController.addHospitalDep(check.getText());
 					check.setDisable(true);
 				}
 			});
@@ -60,6 +58,7 @@ public class MainController {
 		this.menu_button_dep.getItems().setAll(menu_list);
 		this.reinit.setOnAction(e -> {
 			this.deathController.removeDeaths();
+			this.hospitalController.removeHospital();
 			this.reinit();
 		});
 		this.apply_date.setOnAction(e -> {
@@ -76,10 +75,8 @@ public class MainController {
 				LocalDate localDate2 = dp2.getValue();
 				Instant instant2 = Instant.from(localDate2.atStartOfDay(ZoneId.systemDefault()));
 				Date date2 = Date.from(instant2);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				System.out.println(date);
-				System.out.println(date2);
 				this.deathController.addDeathDate(date,date2);
+				this.hospitalController.addHospitalDate(date,date2);
 			}
 		});
 	}
@@ -92,6 +89,7 @@ public class MainController {
 		loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/hospitals_panel.fxml"));
 		this.accordion_h.setContent(loader.load());
+		this.hospitalController = loader.getController();
 		loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/reanimations_panel.fxml"));
 		this.accordion_r.setContent(loader.load());
