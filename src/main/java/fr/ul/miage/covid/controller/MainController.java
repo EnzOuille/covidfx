@@ -24,6 +24,7 @@ public class MainController {
 	@FXML private TitledPane accordion_h;
 	@FXML private TitledPane accordion_r;
 	@FXML private TitledPane accordion_v;
+	@FXML private TitledPane accordion_n;
 	@FXML private Accordion accordion;
 	@FXML private Button reinit;
 	@FXML private DatePicker dp1;
@@ -107,6 +108,9 @@ public class MainController {
 		loader.setLocation(getClass().getResource("/vaccinations_panel.fxml"));
 		this.accordion_v.setContent(loader.load());
 		this.vaccinationController = loader.getController();
+		loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/national_panel.fxml"));
+		this.accordion_n.setContent(loader.load());
 	}
 	
 	private void reinit() {

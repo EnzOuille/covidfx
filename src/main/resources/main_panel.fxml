@@ -45,6 +45,7 @@
           <TitledPane fx:id="accordion_h" text="Hospitalisations" />
           <TitledPane fx:id="accordion_r" text="Reanimations" />
           <TitledPane fx:id="accordion_v" text="Vaccinations" />
+        <TitledPane fx:id="accordion_n" text="National" />
         </panes>
       </Accordion>
    </center>
