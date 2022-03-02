@@ -23,6 +23,7 @@ public class MainController {
 	@FXML private TitledPane accordion_d;
 	@FXML private TitledPane accordion_h;
 	@FXML private TitledPane accordion_r;
+	@FXML private TitledPane accordion_v;
 	@FXML private Accordion accordion;
 	@FXML private Button reinit;
 	@FXML private DatePicker dp1;
@@ -31,6 +32,8 @@ public class MainController {
 	
 	private DeathController deathController;
 	private HospitalController hospitalController;
+	private ReanimationController reanimationController;
+	private VaccinationController vaccinationController;
 	
 	@FXML
 	private void initialize() throws IOException {
@@ -49,6 +52,8 @@ public class MainController {
 				if (check.isSelected()) {
 					this.deathController.addDeathsDep(check.getText());
 					this.hospitalController.addHospitalDep(check.getText());
+					this.reanimationController.addReanimationDep(check.getText());
+					this.vaccinationController.addVaccinationDep(check.getText());
 					check.setDisable(true);
 				}
 			});
@@ -59,6 +64,8 @@ public class MainController {
 		this.reinit.setOnAction(e -> {
 			this.deathController.removeDeaths();
 			this.hospitalController.removeHospital();
+			this.reanimationController.removeReanimation();
+			this.vaccinationController.removeVaccination();
 			this.reinit();
 		});
 		this.apply_date.setOnAction(e -> {
@@ -77,6 +84,8 @@ public class MainController {
 				Date date2 = Date.from(instant2);
 				this.deathController.addDeathDate(date,date2);
 				this.hospitalController.addHospitalDate(date,date2);
+				this.reanimationController.addReanimationDate(date, date2);
+				this.vaccinationController.addVaccinationDate(date, date2);
 			}
 		});
 	}
@@ -93,6 +102,11 @@ public class MainController {
 		loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/reanimations_panel.fxml"));
 		this.accordion_r.setContent(loader.load());
+		this.reanimationController = loader.getController();
+		loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/vaccinations_panel.fxml"));
+		this.accordion_v.setContent(loader.load());
+		this.vaccinationController = loader.getController();
 	}
 	
 	private void reinit() {

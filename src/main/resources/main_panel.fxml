@@ -43,7 +43,8 @@
         <panes>
           <TitledPane fx:id="accordion_d" text="Morts" />
           <TitledPane fx:id="accordion_h" text="Hospitalisations" />
-            <TitledPane fx:id="accordion_r" text="Reanimations" />
+          <TitledPane fx:id="accordion_r" text="Reanimations" />
+          <TitledPane fx:id="accordion_v" text="Vaccinations" />
         </panes>
       </Accordion>
    </center>
