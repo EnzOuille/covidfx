@@ -7,7 +7,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.ul.miage.covid.controller.DeathController">
    <center>
-      <LineChart fx:id="deaths_chart" BorderPane.alignment="CENTER">
+      <LineChart fx:id="deaths_chart" createSymbols="false" BorderPane.alignment="CENTER">
         <xAxis>
           <CategoryAxis side="BOTTOM" fx:id="x_deaths" />
         </xAxis>

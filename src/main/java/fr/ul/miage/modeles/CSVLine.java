@@ -19,7 +19,7 @@ public class CSVLine {
 	@CsvBindByName(column="hospitalises")
 	private String hospitalisations;
 
-	@CsvBindByName(column="vaccines_premier_dose")
+	@CsvBindByName(column="vaccines_premiere_dose")
 	private String vaccinations;
 
 	public String getDate() {

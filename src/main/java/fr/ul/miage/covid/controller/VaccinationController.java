@@ -27,7 +27,7 @@ public class VaccinationController {
     private void initialize() {
         x_vaccination.setLabel("Date");
         y_vaccination.setLabel("Nombre");
-        this.lignes = App.JSONLOADER.getHospitalisations();
+        this.lignes = App.JSONLOADER.getVaccinations();
         this.dep_choosen = new ArrayList<>();
         this.vaccination_chart.setAnimated(false);
     }

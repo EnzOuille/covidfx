@@ -26,7 +26,7 @@ public class ReanimationController {
     private void initialize() {
         x_reanimation.setLabel("Date");
         y_reanimation.setLabel("Nombre");
-        this.lignes = App.JSONLOADER.getHospitalisations();
+        this.lignes = App.JSONLOADER.getReanimations();
         this.dep_choosen = new ArrayList<>();
         this.reanimation_chart.setAnimated(false);
     }
