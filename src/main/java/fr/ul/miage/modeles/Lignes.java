@@ -40,7 +40,7 @@ public class Lignes {
             if (departements.size() == 0) {
                 res += this.elements.get(i).getCount();
                 departements.add(this.elements.get(i).getDepartement());
-            } else if (departements.contains(this.elements.get(i).getDepartement().replace("DEP-", ""))) {
+            } else if (departements.contains(this.elements.get(i).getDepartement().replace("DEP-", "").replace("REG-",""))) {
                 res += this.elements.get(i).getCount();
             }
         }

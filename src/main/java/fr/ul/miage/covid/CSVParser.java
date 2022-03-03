@@ -17,6 +17,7 @@ public class CSVParser {
     private final Lignes reanimations = new Lignes();
     private final Lignes hospitalisations = new Lignes();
     private final Lignes vaccinations = new Lignes();
+    private final Lignes vaccinations_calcul = new Lignes();
     private FileReader file_reader;
 
     public CSVParser(String filename) {
@@ -42,36 +43,43 @@ public class CSVParser {
                     try {
                         Long deces = Long.valueOf(ligne.getDeces());
                         this.morts.add(new Ligne(deces, code, date));
-                    } catch (ParseException | NumberFormatException ignored) {}
+                    } catch (ParseException | NumberFormatException ignored) {
+                    }
                 }
                 if (date != null && code != null && code.contains("DEP-")) {
                     try {
                         Long hospitalisations = Long.valueOf(ligne.getHospitalisations());
                         this.hospitalisations.add(new Ligne(hospitalisations, code, date));
-                    } catch (ParseException | NumberFormatException ignored) {}
+                    } catch (ParseException | NumberFormatException ignored) {
+                    }
                 }
                 if (date != null && code != null && code.contains("DEP-")) {
                     try {
                         Long reanimations = Long.valueOf(ligne.getReanimations());
                         this.reanimations.add(new Ligne(reanimations, code, date));
-                    } catch (ParseException | NumberFormatException ignored) {}
+                    } catch (ParseException | NumberFormatException ignored) {
+                    }
                 }
-                if (date != null && code != null && code.contains("DEP-")) {
+                if (date != null && code != null && (code.contains("DEP-"))) {
                     try {
                         Long vaccinations = Long.valueOf(ligne.getVaccinations());
                         this.vaccinations.add(new Ligne(vaccinations, code, date));
-                    } catch (ParseException | NumberFormatException ignored) {}
+                    } catch (ParseException | NumberFormatException ignored) {
+                    }
+                }
+                if (date != null && code != null && (code.contains("DEP-") | code.contains("REG-"))) {
+                    try {
+                        Long vaccinations_calcul = Long.valueOf(ligne.getVaccinations());
+                        this.vaccinations_calcul.add(new Ligne(vaccinations_calcul, code, date));
+                    } catch (ParseException | NumberFormatException ignored) {
+                    }
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    public FileReader getFile_reader() {
-        return file_reader;
-    }
-
+    
     public Lignes getMorts() {
         return morts;
     }
@@ -88,4 +96,7 @@ public class CSVParser {
         return vaccinations;
     }
 
+    public Lignes getVaccinations_calcul() {
+        return vaccinations_calcul;
+    }
 }
