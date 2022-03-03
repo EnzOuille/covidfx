@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 	
-	public final static CSVParser JSONLOADER = new CSVParser("france.csv");
+	public final static CSVParser JSONLOADER = new CSVParser("/france.csv");
 
 	@Override
 	public void start(Stage primaryStage) {

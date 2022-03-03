@@ -5,11 +5,11 @@ import fr.ul.miage.modeles.CSVLine;
 import fr.ul.miage.modeles.Ligne;
 import fr.ul.miage.modeles.Lignes;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URL;
+import java.io.*;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CSVParser {
 
@@ -17,20 +17,26 @@ public class CSVParser {
     private final Lignes reanimations = new Lignes();
     private final Lignes hospitalisations = new Lignes();
     private final Lignes vaccinations = new Lignes();
-    private final Lignes vaccinations_calcul = new Lignes();
+
     private FileReader file_reader;
 
     public CSVParser(String filename) {
-        ClassLoader classLoader = CSVParser.class.getClassLoader();
-        URL resource = classLoader.getResource(filename);
         try {
-            if (resource != null) {
-                this.file_reader = (new FileReader(resource.getFile()));
+            ClassLoader classLoader = CSVParser.class.getClassLoader();
+            InputStream initialStream = getClass().getResourceAsStream(filename);
+            OutputStream outStream = new FileOutputStream("final.csv");
+            byte[] buffer = new byte[8 * 1024];
+            int bytesRead;
+            while ((bytesRead = initialStream.read(buffer)) != -1) {
+                outStream.write(buffer, 0, bytesRead);
             }
-        } catch (FileNotFoundException e) {
+            initialStream.close();
+            outStream.close();
+            this.file_reader = new FileReader("final.csv");
+            this.parseCSV();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        this.parseCSV();
     }
 
     public void parseCSV() {
@@ -67,19 +73,12 @@ public class CSVParser {
                     } catch (ParseException | NumberFormatException ignored) {
                     }
                 }
-                if (date != null && code != null && (code.contains("DEP-") | code.contains("REG-"))) {
-                    try {
-                        Long vaccinations_calcul = Long.valueOf(ligne.getVaccinations());
-                        this.vaccinations_calcul.add(new Ligne(vaccinations_calcul, code, date));
-                    } catch (ParseException | NumberFormatException ignored) {
-                    }
-                }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public Lignes getMorts() {
         return morts;
     }
@@ -96,7 +95,4 @@ public class CSVParser {
         return vaccinations;
     }
 
-    public Lignes getVaccinations_calcul() {
-        return vaccinations_calcul;
-    }
 }
